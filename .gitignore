@@ -1,0 +1,8 @@
+# ignore everything
+*
+
+# include files
+!.gitignore
+!wezterm/*
+!fish/*
+!nvim/*
