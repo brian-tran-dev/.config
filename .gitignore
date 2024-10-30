@@ -6,4 +6,6 @@
 !wezterm/*
 !fish/*
 !nvim/*
+!environment.d/*.conf
+!install.sh
 !README.md
