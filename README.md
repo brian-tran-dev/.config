@@ -1,4 +1,4 @@
-# Local Config
+## Instruction
 
 ```
 bash install.sh
@@ -10,10 +10,4 @@ whereis fish | tee >(less)
 less /etc/shells
 echo "" > /etc/shells
 chsh -s /usr/local/bin/fish
-```
-
-### Wezterm
-/etc/environment
-```
-WEZTERM_CONFIG_FILE="/home/brian/.config/wezterm/init.lua"
 ```
