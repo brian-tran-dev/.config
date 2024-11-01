@@ -1,7 +1,10 @@
 ## Instruction
 
+1. Setup Git credentials using 1password
+2. Run install script
+
 ```
-bash install.sh
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/brian-tran-dev/.config/HEAD/install.sh)"
 ```
 
 ### Fish Shell

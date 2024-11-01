@@ -1,4 +1,4 @@
 function b
 	set -lx BAT_THEME "OneHalfDark"
-	batcat --paging=always $argv
+	bat --paging=always $argv
 end
