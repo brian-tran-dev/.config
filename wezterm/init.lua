@@ -23,9 +23,9 @@ local function tcopy(t)
   	return t2
 end
 
-config.font = wezterm.font("FiraCode Nerd Font Propo")
-config.font_size = 15
-config.line_height = 1.2
+config.font = wezterm.font("FiraCode Nerd Font")
+config.font_size = 14
+config.line_height = 1.4
 config.cell_width = 1.05
 config.color_scheme = "Monokai Pro (Gogh)"
 config.automatically_reload_config = false
@@ -47,8 +47,7 @@ config.window_padding = {
 ------------- WINDOW FRAME -----------------------------------------------
 local border_color = '#a7f3d0'
 local shrunk_window_frame = {
-	border_left_width = '1px',
-	border_right_width = '1px',
+	border_left_width = '1px', border_right_width = '1px',
 	border_bottom_height = '1px',
 	border_top_height = '1px',
 	border_left_color = border_color,
@@ -168,7 +167,7 @@ local function generate_key_config()
 	return key_config
 end
 
-local function close_window(gui_window, mux_pane)
+local function close_window(gui_window, _)
 	local mux_window = gui_window:mux_window()
 	local tab_c = #mux_window:tabs()
 	for _=1,tab_c do
@@ -180,7 +179,7 @@ local function close_window(gui_window, mux_pane)
 	end
 end
 
-local function toggle_fullscreen(gui_window, mux_pane)
+local function toggle_fullscreen(gui_window, _)
 	local is_fullscreen = gui_window:get_dimensions().is_full_screen
 	if is_fullscreen then
 		gui_window:toggle_fullscreen()
@@ -257,7 +256,7 @@ local function accept_pattern(gui_window, mux_pane)
 	fn_pane_mode(mux_pane, SCROLL)
 end
 
-local function update_tab_name(gui_window, mux_pane, new_name)
+local function update_tab_name(gui_window, _, new_name)
 	local tab_id = gui_window:active_tab():tab_id()
 	if string.len(new_name) > 0 then
 		tab_names[tab_id] = new_name
@@ -352,7 +351,7 @@ cbind(SEARCH, "NONE", "Escape", act_cb(exit_search_mode))
 cbind(SEARCH, "NONE", "Enter", act_cb(accept_pattern))
 cbind(SEARCH, "CTRL", "raw:22", act.CopyMode 'ClearPattern')
 cbind(SCROLL, "CTRL", "raw:22", act.CopyMode 'ClearPattern')
-cbind(SCROLL, "NONE", "n", act.Multiple { 
+cbind(SCROLL, "NONE", "n", act.Multiple {
 	act.CopyMode 'NextMatch',
 	act.CopyMode 'MoveToSelectionOtherEnd',
 	act.CopyMode 'ClearSelectionMode'
@@ -378,7 +377,6 @@ config.keys = generate_key_config()
 config.key_tables = { copy_mode = {}, search_mode = {} }
 
 -------------------- Event Schedule ----------------------------
-
 local function schedule_event(event_name, time_in_seconds, gui_window)
 	local emitter = {}
 	emitter.fn = function ()
@@ -395,6 +393,7 @@ local events <const> = {
 		time = 0.2,
 	}
 }
+
 on_event("window-config-reloaded", function(gui_window)
 	if not scheduled then
 		scheduled = true
@@ -430,85 +429,40 @@ on_event(events.update_status.name, function(gui_window)
 end)
 ----------------------------------------------------------
 ------------ Tab Title -----------------------------
+local title_cache_tab = {}
+on_event('format-tab-title', function(tab, _, _, _, _, _)
+	local id = tab.tab_id
+	local name = tab_names[id] or ""
+	local active = tab.is_active
+	local index = tab.tab_index
+	local item = title_cache_tab[id] or {}
 
-local function split_path(s)
-	local a = {}
-	local i = 0
-	for p in string.gmatch(s, '[^/]+') do
-		i = i + 1
-		a[i] = p
-	end
-	return a
-end
-
-local function get_tab_short_info(tab)
-	local pane = wezterm.mux.get_tab(tab.tab_id):active_pane()
-	local process = pane:get_foreground_process_info()
-	local names = split_path(pane:get_current_working_dir().file_path)
-	local wdir = ""
-	local in_home = #names >= 2 and names[1] == 'home' and names[2] == 'brian'
-	if #names >= 5 then
-		if in_home then
-			wdir = '~/.../'..names[#names-1]..'/'..names[#names]
-		else
-			wdir = '.../'..names[#names-1]..'/'..names[#names]
+	if item.active ~= active or
+	   item.index ~= index or
+	   item.name ~= name
+	then
+		log("new title"..id)
+		local bg_color = "#28222A"
+		local fg_color = "#FFFFFF"
+		local intensity = "Normal"
+		if active then
+			bg_color = "#454552"
+			intensity = "Bold"
 		end
-	elseif #names == 4 then
-		if in_home then
-			wdir = '~/'..names[3]..'/'..names[4]
-		else
-			wdir = '.../'..names[3]..'/'..names[4]
-		end
-	elseif #names == 3 then
-		if in_home then
-			wdir = '~/'..names[3]
-		else
-			wdir = '.../'..names[#names - 1]..'/'..names[#names]
-		end
-	elseif #names == 2 then
-		if in_home then
-			wdir = '~'
-		else
-			wdir = '/'..names[#names - 1]..'/'..names[#names]
-		end
-	elseif #names == 1 then
-		wdir = '/'..names[1]
-	else
-		wdir = '/'
+		item = {
+			name = name,
+			active = active,
+			index = index,
+			value = {
+				{ Background = { Color = bg_color } },
+				{ Foreground = { Color = fg_color } },
+				{ Attribute = { Intensity = intensity } },
+				{ Text = ' '..(index + 1)..': '..name..' ' },
+			}
+		}
+		title_cache_tab[id] = item
 	end
-	local process_name = ""
-	if process and process.name ~= 'fish' then
-		process_name = ' '..icon.cod_terminal..' '..process.name
-	end
-	return wdir..process_name
-end
-
-on_event('format-tab-title', function(tab, _, _, _, hover, _)
-	local tab_name = tab_names[tab.tab_id] or nil
-	if tab_name then
-		tab_name = tab_name..'  '..get_tab_short_info(tab)
-	else
-		tab_name = get_tab_short_info(tab)
-	end
-	local bg_color = "#28222A"
-	local fg_color = "#FFFFFF"
-	local intensity = "Normal"
-	local italic = false
-	if tab.is_active then
-		bg_color = "#454552"
-		intensity = "Bold"
-	elseif hover then
-		bg_color = "#38333E"
-		intensity = "Normal"
-		italic = true
-	end
-	return {
-		{ Background = { Color = bg_color } },
-		{ Foreground = { Color = fg_color } },
-		{ Attribute = { Intensity = intensity } },
-		{ Attribute = { Italic = italic } },
-		{ Text = ' '..(tab.tab_index + 1)..':'..tab_name..' ' },
-	}
+	return item.value
 end)
 ----------------------------------------------
 
