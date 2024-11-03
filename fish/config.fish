@@ -14,6 +14,9 @@ if not test -e "/home/linuxbrew/.linuxbrew/bin/brew"
 	brew install starship
 	brew install zoxide
 	brew install bat
+	brew install ripgrep
+	brew install fd
+	brew install yazi
 else
 	eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 end
