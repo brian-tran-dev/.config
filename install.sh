@@ -24,12 +24,6 @@ sudo apt-add-repository ppa:fish-shell/release-3
 sudo apt update
 sudo apt install -y fish
 
-user_env_d = "$HOME/.config/environment.d"
-if [ !(-d $user_env_d ) ]; then
-	mkdir -p $user_env_d
-	echo "WEZTERM_CONFIG_FILE=\"$HOME/.config/wezterm/init.lua\"" > "$user_env_d/wezterm.conf"
-end
-
 sudo apt install ffmpeg
 sudo apt install p7zip-full
 sudo apt install jq

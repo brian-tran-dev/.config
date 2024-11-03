@@ -1,11 +1,15 @@
 # ignore everything
-*
+/*
 
 # include files
 !.gitignore
-!wezterm/*
-!fish/*
-!nvim/*
-!environment.d/*
+!/wezterm
+!/wezterm/*
+!/fish
+!/fish/*
+!/nvim
+!/nvim/*
+!/environment.d
+!/environment.d/*
 !install.sh
 !README.md
