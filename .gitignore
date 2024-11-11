@@ -3,6 +3,7 @@
 
 # include files
 !.gitignore
+!.editorconfig
 !/wezterm
 !/wezterm/*
 !/fish

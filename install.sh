@@ -1,3 +1,7 @@
+cwd = $(pwd)
+mkdir -p $HOME/.config
+cd $HOME/.config
+
 # Install Git
 sudo apt update
 sudo apt install git
@@ -23,11 +27,20 @@ sudo apt install -y software-properties-common
 sudo apt-add-repository ppa:fish-shell/release-3
 sudo apt update
 sudo apt install -y fish
+ # Install Fisher
+curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
 
+# Install flatpak
+sudo apt install flatpak
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+flatpak install flathub com.github.IsmaelMartinez.teams_for_linux
+
+# Instal utilities
 sudo apt install ffmpeg
 sudo apt install p7zip-full
 sudo apt install jq
 
-sudo apt install flatpak
-flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-flatpak install flathub com.github.IsmaelMartinez.teams_for_linux
+# add EditorConfig to $HOME
+cp $HOME/.config/.editorconfig $HOME/.editorconfig
+
+cd $cwd

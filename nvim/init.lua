@@ -13,6 +13,5 @@ opt.tabstop = 4
 opt.shiftwidth = 4
 opt.wrap = false
 
-vim.keymap.set("i", "jj", "<ESC>", {})
-vim.keymap.set("n", "C-BS", ":noh", {})
-vim.keymap.set("v", "C-BS", ":noh", {})
+vim.keymap.set("i", "jj", "<ESC>", { noremap = true })
+vim.keymap.set("n", "<BS>", ":noh<Enter>", { noremap = true })

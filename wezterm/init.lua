@@ -363,7 +363,7 @@ cbind(SCROLL, "CTRL", "n", act.Multiple {
 	act.CopyMode 'ClearSelectionMode',
 })
 ------------------------------------------
-cbind(DEFAULT, "CTRL", "p", act.ActivateCommandPalette)
+cbind(DEFAULT, "CTRL|SHIFT", "p", act.ActivateCommandPalette)
 cbind(DEFAULT, "LEADER", "d", act_cb(function(w, p)
 	log("Config ", w:effective_config())
 	w:perform_action(act.ShowDebugOverlay, p)
