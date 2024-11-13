@@ -1,14 +1,16 @@
 return {
 	"williamboman/mason.nvim",
-	dependencies = { "FeiyouG/commander.nvim" },
-	config = function ()
-		require("mason").setup({})
-
-		require("commander").add({
-			keys = {"n", "<leader> ma"},
-			cmd = ":Mason",
+	keys = {
+		{
+			"<leader>pm",
+			function()
+				vim.cmd([[ Mason ]])
+			end,
+			mode = "n",
 			desc = "Mason Panel",
-			cat = "lsp"
-		})
-	end
+		},
+	},
+	config = function()
+		require("mason").setup({})
+	end,
 }

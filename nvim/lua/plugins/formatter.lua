@@ -18,12 +18,26 @@ return {
 				yaml = { "prettier" },
 				markdown = { "prettier" },
 			},
-			format_on_save = {
-				-- These options will be passed to conform.format()
-				timeout_ms = 500,
-				lsp_format = "fallback",
-			},
+			format_on_save = function() end,
 		})
 		require("mason-conform").setup()
 	end,
+	keys = {
+		{
+			"<leader>rf",
+			function()
+				require("conform").format()
+			end,
+			mode = "n",
+			desc = "Reformat all",
+		},
+		{
+			"<leader>rf",
+			function()
+				require("conform").format()
+			end,
+			mode = "v",
+			desc = "Reformat selection",
+		},
+	},
 }

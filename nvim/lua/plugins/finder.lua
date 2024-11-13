@@ -1,37 +1,71 @@
 return {
 	{
-		'nvim-telescope/telescope.nvim', tag = '0.1.8',
-		dependencies = {
-			{ 'nvim-tree/nvim-web-devicons' },
-			{ "nvim-lua/plenary.nvim" },
-		}
+		'mrjones2014/legendary.nvim',
+		priority = 900,
+		lazy = false,
+		dependencies = { 'kkharji/sqlite.lua' },
+		opts = {
+			extensions = {
+				lazy_nvim = true, },
+		},
+		keys = {
+			{
+				"<leader>pl",
+				function () vim.cmd[[ Lazy ]] end,
+				mode = "n",
+				noremap = true,
+				desc = "Lazy Panel",
+			},
+			{
+				"<C-p>",
+				function () vim.cmd[[ Legendary ]] end,
+				mode = {"n", "v"},
+				noremap = true,
+			}
+		},
 	},
 	{
-		"FeiyouG/commander.nvim",
-		dependencies = { "nvim-telescope/telescope.nvim" },
-		config = function()
-			local tele_builtin = require("telescope.builtin")
-			vim.keymap.set("n", "<C-p>", ":Telescope commander<Enter>", { noremap = true })
-			require("commander").add({
-				{
-					keys = {
-						{"n", "<C-f>"},
-						{"i", "<C-f>"},
+		"nvim-telescope/telescope.nvim",
+		dependencies = {
+			{ "nvim-tree/nvim-web-devicons" },
+			{ "nvim-lua/plenary.nvim" },
+		},
+		keys = {
+			{
+				"<leader>fg",
+				function() require("telescope.builtin").live_grep() end,
+				desc = "Find in",
+				mode = "n",
+				noremap = true,
+			},
+			{
+				"<leader>ff",
+				function() require("telescope.builtin").find_files() end,
+				mode = "n",
+				desc = "Open file",
+				noremap = true,
+			}
+		},
+		config = function ()
+			local actions = require("telescope.actions")
+			require("telescope").setup({
+				defaults = {
+					mappings = {
+						n = {
+							["<C-c>"] = actions.close
+						}
 					},
-					cmd = tele_builtin.live_grep,
-					desc = "Find in ...",
-					cat = "find",
-				},
-				{
-					keys = {
-						{"n", "<C-o>"},
-						{"i", "<C-o>"},
+					layout_strategy = "vertical",
+					layout_config = {
+						vertical = {
+							height = 0.95,
+							preview_cutoff = 0,
+							prompt_position = "bottom",
+							width = 0.8
+						},
 					},
-					cmd = tele_builtin.find_files,
-					desc = "Open a file",
-					cat = "find",
 				},
 			})
 		end
-	}
+	},
 }

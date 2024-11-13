@@ -15,4 +15,8 @@ return {
 			require("ibl").setup()
 		end,
 	},
+	{
+		'stevearc/dressing.nvim',
+		opts = {},
+	},
 }
