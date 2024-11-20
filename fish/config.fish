@@ -28,9 +28,15 @@ if test -z (fisher list nvm)
 	set --universal nvm_default_version lts
 end
 
+if test -z (nvm list)
+	nvm install lts
+	set --universal nvm_default_version lts
+end
+
 fzf --fish | source
 starship init fish | source
 zoxide init fish | source
 
-# set keymap
-setxkbmap -option "ctrl:nocaps"
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH

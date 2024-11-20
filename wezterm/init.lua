@@ -24,7 +24,8 @@ local function tcopy(t)
 end
 
 config.font = wezterm.font("FiraCode Nerd Font")
-config.font_size = 14
+
+config.font_size = 10
 config.line_height = 1.4
 config.cell_width = 1.05
 config.color_scheme = "Monokai Pro (Gogh)"
@@ -274,7 +275,8 @@ cbind(DEFAULT, "LEADER|CTRL", "k", act.SplitPane { direction = 'Up', size = { Pe
 cbind(DEFAULT, "LEADER|CTRL", "h", act.SplitPane { direction = 'Left', size = { Percent = 50 } } )
 cbind(DEFAULT, "LEADER|CTRL", "l", act.SplitPane { direction = 'Right', size = { Percent = 50 } } )
 ---- Resize Pane ----------------
-cbind(DEFAULT, "LEADER|SHIFT", "j", act.AdjustPaneSize { 'Down', 5 }) cbind(DEFAULT, "LEADER|SHIFT", "k", act.AdjustPaneSize { 'Up', 5 })
+cbind(DEFAULT, "LEADER|SHIFT", "j", act.AdjustPaneSize { 'Down', 2 })
+cbind(DEFAULT, "LEADER|SHIFT", "k", act.AdjustPaneSize { 'Up', 2 })
 cbind(DEFAULT, "LEADER|SHIFT", "h", act.AdjustPaneSize { 'Left', 5 })
 cbind(DEFAULT, "LEADER|SHIFT", "l", act.AdjustPaneSize { 'Right', 5 })
 ---- Navigate Pane ----------------
@@ -304,7 +306,7 @@ cbind(DEFAULT, "ALT", "6", act.ActivateTab(5))
 cbind(DEFAULT, "ALT", "7", act.ActivateTab(6))
 cbind(DEFAULT, "ALT", "8", act.ActivateTab(7))
 ------- Pane Specific Mode -----------------------------
-cbind(DEFAULT, "LEADER", "[", act_cb(enter_scroll_mode))
+cbind(DEFAULT, "LEADER|CTRL", "[", act_cb(enter_scroll_mode))
 cbind(SCROLL, "NONE", "Escape", act_cb(exit_scroll_mode))
 cbind(SCROLL, "NONE", "q", act_cb(exit_scroll_mode))
 
@@ -378,33 +380,8 @@ config.keys = generate_key_config()
 config.key_tables = { copy_mode = {}, search_mode = {} }
 
 -------------------- Event Schedule ----------------------------
-local function schedule_event(event_name, time_in_seconds, gui_window)
-	local emitter = {}
-	emitter.fn = function ()
-		time.call_after(time_in_seconds, emitter.fn)
-		wezterm.emit(event_name, gui_window)
-	end
-	emitter.fn()
-end
-
-local scheduled = false
-local events <const> = {
-	update_status = {
-		name = "my_update_status",
-		time = 0.2,
-	}
-}
-
-on_event("window-config-reloaded", function(gui_window)
-	if not scheduled then
-		scheduled = true
-		for _, event in pairs(events) do
-			schedule_event(event.name, event.time, gui_window)
-		end
-	end
-end)
-
-on_event(events.update_status.name, function(gui_window)
+config.status_update_interval = 500
+on_event("update-right-status", function(gui_window)
 	local date = strftime '%a,%d/%m,%H:%M:%S'
 	local mode = fn_pane_mode(gui_window:active_pane())
 
