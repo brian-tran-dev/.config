@@ -31,3 +31,6 @@ end
 fzf --fish | source
 starship init fish | source
 zoxide init fish | source
+
+# set keymap
+setxkbmap -option "ctrl:nocaps"
