@@ -12,6 +12,7 @@ cd $HOME/.config
 git init
 git config --local user.name "Brian Tran"
 git config --local user.email "khoaphananhtran@gmail.com"
+git config --local push.autoSetupRemote true
 git remote add origin git@github.com:brian-tran-dev/.config.git $HOME/
 git pull origin master
 # add EditorConfig to $HOME
