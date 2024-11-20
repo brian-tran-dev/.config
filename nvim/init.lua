@@ -1,8 +1,8 @@
+local opt = vim.o
+opt.termguicolors = true
 -- bootstrap lazy.nvim, LazyVim and your plugins
 require("config.lazy")
 require("config.diagnostic")
-
-local opt = vim.o
 opt.clipboard = "unnamedplus"
 opt.number = true
 opt.relativenumber = false

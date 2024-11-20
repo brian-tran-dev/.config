@@ -267,7 +267,7 @@ local function update_tab_name(gui_window, _, new_name)
 end
 
 cbind(DEFAULT, "NONE", "F11", act_cb(toggle_fullscreen))
-cbind(DEFAULT, "CTRL", "w", act_cb(close_window))
+cbind(DEFAULT, "CTRL", "w", act.QuitApplication)
 ---- Split Pane ------------------
 cbind(DEFAULT, "LEADER|CTRL", "j", act.SplitPane { direction = 'Down', size = { Percent = 50 } } )
 cbind(DEFAULT, "LEADER|CTRL", "k", act.SplitPane { direction = 'Up', size = { Percent = 50 } } )
