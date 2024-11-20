@@ -1,4 +1,4 @@
-cwd = $(pwd)
+cwd=$(pwd)
 mkdir -p $HOME/.config
 cd $HOME/.config
 
