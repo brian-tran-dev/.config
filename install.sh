@@ -27,8 +27,15 @@ sudo apt install -y software-properties-common
 sudo apt-add-repository ppa:fish-shell/release-3
 sudo apt update
 sudo apt install -y fish
- # Install Fisher
+
+# Install Fisher
 curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
+
+# Install Deno
+curl -fsSL https://deno.land/install.sh | sh
+
+# Install Bun
+curl -fsSL https://bun.sh/install | bash
 
 # Install flatpak
 sudo apt install flatpak
