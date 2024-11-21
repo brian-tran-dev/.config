@@ -5,7 +5,6 @@ local act = wezterm.action
 local act_cb = wezterm.action_callback
 local format = wezterm.format
 local strftime = wezterm.strftime
-local time = wezterm.time
 local on_event = wezterm.on
 local log = wezterm.log_info
 local icon = wezterm.nerdfonts
@@ -31,6 +30,12 @@ config.cell_width = 1.05
 config.color_scheme = "Monokai Pro (Gogh)"
 config.automatically_reload_config = false
 config.default_gui_startup_args = {"start", "--always-new-process"}
+config.front_end = "WebGpu"
+config.max_fps = 240
+config.animation_fps = 60
+config.webgpu_power_preference = "HighPerformance"
+config.cursor_blink_ease_in = "Ease"
+config.cursor_blink_ease_out = "Ease"
 
 config.enable_tab_bar = true
 config.show_close_tab_button_in_tabs = false
@@ -167,18 +172,6 @@ local function generate_key_config()
 		}
 	end
 	return key_config
-end
-
-local function close_window(gui_window, _)
-	local mux_window = gui_window:mux_window()
-	local tab_c = #mux_window:tabs()
-	for _=1,tab_c do
-		local cur_pane = mux_window:active_pane()
-		gui_window:perform_action(
-			act.CloseCurrentTab { confirm = false },
-			cur_pane
-		)
-	end
 end
 
 local function toggle_fullscreen(gui_window, _)
