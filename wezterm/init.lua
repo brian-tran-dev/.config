@@ -22,7 +22,7 @@ local function tcopy(t)
   	return t2
 end
 
-config.font = wezterm.font("FiraCode Nerd Font")
+config.font = wezterm.font("JetBrainsMonoNL Nerd Font")
 
 config.font_size = 10
 config.line_height = 1.4
