@@ -24,7 +24,7 @@ end
 
 config.font = wezterm.font("JetBrainsMonoNL Nerd Font")
 
-config.font_size = 12
+config.font_size = 14
 config.line_height = 1.4
 config.cell_width = 1.05
 config.color_scheme = "Monokai Pro (Gogh)"
