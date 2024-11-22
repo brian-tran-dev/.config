@@ -17,6 +17,10 @@ git remote add origin git@github.com:brian-tran-dev/.config.git $HOME/
 git pull origin master
 # add EditorConfig to $HOME
 cp -T .editorconfig $HOME/.editorconfig
+# add fonts
+mkdir -p $HOME/.local/share/fonts
+cp $HOME/.config/my_share/fonts/*.tff $HOME/.local/share/fonts/
+fc-cache -f -v
 cd $cwd
 
 # Install CURL
@@ -27,6 +31,7 @@ curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /etc/ap
 echo 'deb [signed-by=/etc/apt/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
 sudo apt update
 sudo apt install -y wezterm-nightly
+ln -s $HOME/.config/wezterm/init.lua $HOME/.wezterm.lua
 
 # Install Fish Shell
 sudo apt install -y software-properties-common
