@@ -255,7 +255,7 @@ local function update_tab_name(gui_window, _, new_name)
 end
 
 cbind(DEFAULT, "NONE", "F11", act_cb(toggle_fullscreen))
-cbind(DEFAULT, "CTRL", "w", act.QuitApplication)
+cbind(DEFAULT, "CTRL", "q", act.QuitApplication)
 ---- Split Pane ------------------
 cbind(DEFAULT, "LEADER|CTRL", "j", act.SplitPane { direction = 'Down', size = { Percent = 50 } } )
 cbind(DEFAULT, "LEADER|CTRL", "k", act.SplitPane { direction = 'Up', size = { Percent = 50 } } )
@@ -274,11 +274,11 @@ cbind(DEFAULT, "CTRL", "l", act.ActivatePaneDirection("Right"))
 ----- Close Pane -------------------
 cbind(DEFAULT, "CTRL", "d", act.CloseCurrentPane { confirm = false })
 ------ Tab Operator ----------------
+cbind(DEFAULT, "CTRL", "w", act.CloseCurrentTab { confirm = false })
 cbind(DEFAULT, "ALT", "n", act.SpawnTab 'CurrentPaneDomain')
 cbind(DEFAULT, "ALT", "h", act.ActivateTabRelative(-1))
 cbind(DEFAULT, "ALT", "l", act.ActivateTabRelative(1))
 cbind(DEFAULT, "ALT", "/", act.ShowTabNavigator)
-cbind(DEFAULT, "ALT", "w", act.CloseCurrentTab { confirm = false })
 cbind(DEFAULT, "ALT", "u", act.PromptInputLine {
 	description = "current tab name?",
 	initial_value = "",
@@ -292,8 +292,9 @@ cbind(DEFAULT, "ALT", "5", act.ActivateTab(4))
 cbind(DEFAULT, "ALT", "6", act.ActivateTab(5))
 cbind(DEFAULT, "ALT", "7", act.ActivateTab(6))
 cbind(DEFAULT, "ALT", "8", act.ActivateTab(7))
+cbind(DEFAULT, "ALT", "9", act.ActivateTab(8))
 ------- Pane Specific Mode -----------------------------
-cbind(DEFAULT, "LEADER|CTRL", "[", act_cb(enter_scroll_mode))
+cbind(DEFAULT, "LEADER", "[", act_cb(enter_scroll_mode))
 cbind(SCROLL, "NONE", "Escape", act_cb(exit_scroll_mode))
 cbind(SCROLL, "NONE", "q", act_cb(exit_scroll_mode))
 
