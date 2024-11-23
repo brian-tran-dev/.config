@@ -30,12 +30,6 @@ config.cell_width = 1.05
 config.color_scheme = "Monokai Pro (Gogh)"
 config.automatically_reload_config = false
 config.default_gui_startup_args = {"start", "--always-new-process"}
-config.front_end = "WebGpu"
-config.max_fps = 240
-config.animation_fps = 60
-config.webgpu_power_preference = "HighPerformance"
-config.cursor_blink_ease_in = "Ease"
-config.cursor_blink_ease_out = "Ease"
 
 config.enable_tab_bar = true
 config.show_close_tab_button_in_tabs = false
