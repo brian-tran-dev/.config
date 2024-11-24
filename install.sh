@@ -55,3 +55,5 @@ curl -fsSL https://bun.sh/install | bash
 sudo apt install flatpak
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak install flathub com.github.IsmaelMartinez.teams_for_linux
+
+fish
