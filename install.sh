@@ -19,8 +19,8 @@ git pull origin master
 cp -T .editorconfig $HOME/.editorconfig
 # add fonts
 mkdir -p $HOME/.local/share/fonts
-cp $HOME/.config/my_share/fonts/*.tff $HOME/.local/share/fonts/
-fc-cache -f -v
+#cp $HOME/.config/my_share/fonts/*.tff $HOME/.local/share/fonts/
+#fc-cache -f -v
 cd $cwd
 
 # Install CURL
